@@ -5,18 +5,20 @@ import { AuthLayoutComponent } from './layout/auth/auth-layout/auth-layout.compo
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
       path: '',
       component: MainLayoutComponent,
+      canActivate: [authGuard],
       children: [
-        { path: '', redirectTo: 'home', pathMatch: 'full' }, // ✅ Redirige correctamente a home
+        { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path: 'home', component: HomeComponent },
       ],
     },
     {
-      path: 'auth', // ✅ Evita conflicto con ""
+      path: 'auth',
       component: AuthLayoutComponent,
       children: [
         { path: 'login', component: LoginComponent },

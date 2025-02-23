@@ -4,7 +4,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SessionService } from '../../../services/session.service';
-import { Usuario } from '../../../models/usuario.module';
 @Component({
   selector: 'app-main-layout',
   imports: [RouterOutlet, MatToolbarModule, MatIconModule, MatButtonModule],
