@@ -1,0 +1,35 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Ingresa tu correo</mat-label>
+            <input
+              matInput
+              placeholder="pat@ejemplo.com"
+              formControlName="email"
+              required
+            />
+          </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Ingresa tu contraseña</mat-label>
+            <input formControlName="contrasena" matInput [type]="hide() ? 'password' : 'text'" />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Ocultar contraseña'"
+              [attr.aria-pressed]="hide()"
+              required
+            >
+              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+    </div>
+      <div class="row justify-content-center">
+        <button mat-raised-button type="submit">Iniciar Sesión</button> <br>
+      </div>
+      <div class="row justify-content-center">
+        <a mat-button routerLink="/register">Regístrate</a>
+      </div>
+</form>
