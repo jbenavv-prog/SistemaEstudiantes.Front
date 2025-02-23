@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { LoginUsuarioDTO } from '../../../dtos/usuario/login-usuario.dto';
 import { ErrorHandlerService } from '../../../services/error-handler.service';
+import { SessionService } from '../../../services/session.service';
 @Component({
   selector: 'app-login',
   imports: [
@@ -24,7 +25,12 @@ import { ErrorHandlerService } from '../../../services/error-handler.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  constructor(private apiService: ApiService, private router: Router, private errorHandler: ErrorHandlerService){}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private errorHandler: ErrorHandlerService,
+    private sessionService: SessionService
+  ) {}
 
   loginForm = new FormGroup({
     email: new FormControl(''),
@@ -32,7 +38,7 @@ export class LoginComponent {
   });
 
   onSubmit() {
-console.warn(this.loginForm.value);
+    console.warn(this.loginForm.value);
     if (this.loginForm.invalid) {
       return;
     }
@@ -45,8 +51,10 @@ console.warn(this.loginForm.value);
     this.apiService.login(loginUsuarioDTO).subscribe({
       next: (response) => {
         console.log('Session establecida exitosamente:', response);
+        this.sessionService.setToken(response.data.token);
+        this.sessionService.setUserData(response.data);
         this.router.navigate(['/home']);
-      },
+      },  
       error: (err) => {
         this.errorHandler.handleHttpError(err);
       },

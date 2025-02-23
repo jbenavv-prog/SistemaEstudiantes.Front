@@ -54,7 +54,7 @@ export class RegisterComponent {
     this.apiService.register(createUsuarioDTO).subscribe({
       next: (response) => {
         console.log('Usuario registrado exitosamente:', response);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
       },
       error: (err) => {
         this.errorHandler.handleHttpError(err);
