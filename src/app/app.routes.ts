@@ -6,24 +6,26 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { authGuard } from './guards/auth.guard';
+import { MateriasComponent } from './components/materias/materias.component';
 
 export const routes: Routes = [
-    {
-      path: '',
-      component: MainLayoutComponent,
-      canActivate: [authGuard],
-      children: [
-        { path: '', redirectTo: 'home', pathMatch: 'full' },
-        { path: 'home', component: HomeComponent },
-      ],
-    },
-    {
-      path: 'auth',
-      component: AuthLayoutComponent,
-      children: [
-        { path: 'login', component: LoginComponent },
-        { path: 'register', component: RegisterComponent },
-      ],
-    },
-    { path: '**', component: PageNotFoundComponent }, // Página 404
-  ];
+  {
+    path: '',
+    component: MainLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'materias', component: MateriasComponent },
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+    ],
+  },
+  { path: '**', component: PageNotFoundComponent }, // Página 404
+];

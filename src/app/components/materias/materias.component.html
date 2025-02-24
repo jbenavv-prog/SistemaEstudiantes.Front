@@ -1,0 +1,17 @@
+<h1 class="m-5">Programas</h1>
+
+@if(programa){
+    <mat-card class="p-3" style="width: 300px;">
+        <mat-card-title class="m-3"> {{programa.nombre}}</mat-card-title>
+        <button disabled mat-raised-button>Suscrito</button>
+    </mat-card>
+} @else {
+    @for (program of programas; track program.idPrograma) {
+        <mat-card class="p-3" style="width: 300px;">
+            <mat-card-title class="m-3"> {{program.nombre}}</mat-card-title>
+            <button (click)="suscribirPrograma()" mat-raised-button>Unirse al programa</button>
+        </mat-card>
+        } @empty {
+        <li>No hay programas.</li>
+        }
+}
