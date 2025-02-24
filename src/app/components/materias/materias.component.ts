@@ -8,10 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SuscripcionProgramaUsuario } from '../../dtos/usuario/suscripcion-programa-usuario.dto';
 import { MateriaWithValidationsResponse } from '../../dtos/materia/materia-with-validations-response.dto';
-
+import { MatTableModule } from '@angular/material/table';
 @Component({
   selector: 'app-materias',
-  imports: [MatButtonModule, MatCardModule],
+  imports: [MatButtonModule, MatCardModule, MatTableModule],
   templateUrl: './materias.component.html',
   styleUrl: './materias.component.scss',
 })
@@ -25,17 +25,20 @@ export class MateriasComponent {
 
   programas = new Array();
   programa: ProgramaResponseDTO = {} as ProgramaResponseDTO;
-  materiasWithValidations: MateriaWithValidationsResponse[]  = new Array();
+  materiasWithValidations: MateriaWithValidationsResponse[] = new Array();
+  displayedColumns: string[] = ['idMateria', 'nombre', 'puedeIngresar'];
+
   
   ngOnInit() {
     this.getPrograma();
     this.getProgramas();
+    this.getMateriasWithValidations();
   }
 
   getProgramas() {
     this.apiService.getProgramas().subscribe({
       next: (response) => {
-        console.log('Programas obtenidos exitosamente:', response);
+        console.log('Respuesta obtenida', response);
         this.programas = response.data;
       },
       error: (err) => {
