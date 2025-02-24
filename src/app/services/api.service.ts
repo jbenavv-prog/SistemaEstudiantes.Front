@@ -6,6 +6,7 @@ import { LoginUsuarioDTO } from '../dtos/usuario/login-usuario.dto';
 import { ProgramaResponseDTO } from '../dtos/programa/programa-response.dto';
 import {ApiResponse } from '../models/api-response.module'
 import { SuscripcionProgramaUsuario } from '../dtos/usuario/suscripcion-programa-usuario.dto';
+import { MateriaWithValidationsResponse } from '../dtos/materia/materia-with-validations-response.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,9 @@ export class ApiService {
       return this.http.post(`${this.apiUrl}/auth/register`, createUsuarioDTO);
     }
 
-    getMateriasWithValidations(userId: number){
-      return this.http.post(`${this.apiUrl}/materia/getWithValidations`, userId);
+    getMateriasWithValidations(userId: number):Observable<ApiResponse<MateriaWithValidationsResponse[]>>
+    {
+      return this.http.post<ApiResponse<MateriaWithValidationsResponse[]>>(`${this.apiUrl}/materia/getWithValidations`, userId);
     }
 
     getProgramas(): Observable<ApiResponse<ProgramaResponseDTO[]>> {
