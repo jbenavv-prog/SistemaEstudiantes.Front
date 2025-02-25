@@ -9,6 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { SuscripcionProgramaUsuario } from '../../dtos/usuario/suscripcion-programa-usuario.dto';
 import { MateriaWithValidationsResponse } from '../../dtos/materia/materia-with-validations-response.dto';
 import { MatTableModule } from '@angular/material/table';
+import { CreateUsuarioMateriaDTO } from '../../dtos/usuario-materia/create-usuario-materia.dto';
+import { UsuarioDTO } from '../../dtos/usuario-materia/usuario.dto';
 @Component({
   selector: 'app-materias',
   imports: [MatButtonModule, MatCardModule, MatTableModule],
@@ -28,7 +30,6 @@ export class MateriasComponent {
   materiasWithValidations: MateriaWithValidationsResponse[] = new Array();
   displayedColumns: string[] = ['idMateria', 'nombre', 'puedeIngresar'];
 
-  
   ngOnInit() {
     this.getPrograma();
     this.getProgramas();
@@ -63,7 +64,7 @@ export class MateriasComponent {
   suscribirPrograma(){
     const suscripcionProgramaUsuario: SuscripcionProgramaUsuario = 
       {
-        idUsuario: this.sessionService.getUserData()?.IdUsuario,
+        idUsuario: this.sessionService.getUserData()?.idUsuario,
         idPrograma: this.programa.idPrograma.toString(),
       }
 
@@ -79,7 +80,10 @@ export class MateriasComponent {
   }
 
   getMateriasWithValidations(){
-    this.apiService.getMateriasWithValidations(this.sessionService.getUserData()?.IdUsuario).subscribe({
+    const usuario: UsuarioDTO = {
+      idUsuario: this.sessionService.getUserData()?.idUsuario,
+    }
+    this.apiService.getMateriasWithValidations(usuario).subscribe({
       next: (response) => {
         console.log('Materias obtenidas:', response);
         this.materiasWithValidations = response.data;
@@ -88,5 +92,27 @@ export class MateriasComponent {
         this.errorHandler.handleHttpError(err);
       },
     });
+  }
+
+  routeMateria(){
+  }
+
+  suscribirMateria(idMateria: number){
+    const createUsuarioMateria: CreateUsuarioMateriaDTO = 
+    {
+      idUsuario: this.sessionService.getUserData()?.idUsuario,
+      idMateria: idMateria,
+    }
+
+    this.apiService.suscribirMateria(createUsuarioMateria).subscribe({
+      next: (response) => {
+        console.log('Suscripción exitosa:', response);
+        this.getMateriasWithValidations();
+      },
+      error: (err) => {
+        this.errorHandler.handleHttpError(err);
+      },
+    });
+
   }
 }

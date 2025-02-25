@@ -40,9 +40,11 @@
                   <th mat-header-cell *matHeaderCellDef> Funciones </th>
                   <td mat-cell *matCellDef="let element">
                     @if(element.esMiembro){
-                      <button disabled (click)="suscribirPrograma()" mat-raised-button>Suscribirse</button>
+                      <button class="mr-2" disabled  mat-raised-button>Ya estás Suscrito</button>
+                      <button (click)="routeMateria()" mat-raised-button>Ingresar</button>
                     }@else if(element.puedeIngresar){
-                      <button (click)="suscribirPrograma()" mat-raised-button>Suscribirse</button>
+                      <button class="mr-2" (click)="suscribirMateria(element.idMateria)" mat-raised-button>Suscribirse</button>
+                      <button disabled mat-raised-button>Ingresar</button>
                     }@else if (!element.puedeIngresar) {
                       <ul>
                       @for (mensaje of element.mensajes; track mensaje) {
