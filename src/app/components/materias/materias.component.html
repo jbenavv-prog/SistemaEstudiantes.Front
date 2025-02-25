@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-around">
     <div>
-        <h1 class="m-5">Programas</h1>
+        <h1 class="m-5">Programa</h1>
 
         @if(programa){
             <mat-card class="p-3" style="width: 300px;">
@@ -11,7 +11,7 @@
             @for (program of programas; track program.idPrograma) {
                 <mat-card class="p-3" style="width: 300px;">
                     <mat-card-title class="m-3"> {{program.nombre}}</mat-card-title>
-                    <button (click)="suscribirPrograma()" mat-raised-button>Unirse al programa</button>
+                    <!-- <button (click)="suscribirPrograma()" mat-raised-button>Unirse al programa</button> -->
                 </mat-card>
                 } @empty {
                 <li>No hay programas.</li>

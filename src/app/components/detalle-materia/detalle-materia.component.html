@@ -1,1 +1,14 @@
-<p>detalle-materia works!</p>
+@if(detalleMateriaConEstudiantes.idMateria != 0) {
+<h1>MATERIA: {{detalleMateriaConEstudiantes.nombre}}</h1>
+<br>
+<h3>Estudiantes Incritos a esta materia:</h3>
+<ul>
+    @for (estudiante of detalleMateriaConEstudiantes.estudiantes; track estudiante.idUsuario) {
+      <li>
+        {{ estudiante.nombre }}
+      </li>  
+      }
+</ul>
+} @else {
+    <p>No hay información disponible para esta materia, o no tienes acceso</p>
+}

@@ -82,6 +82,8 @@ export class MateriasComponent {
   getMateriasWithValidations(){
     const usuario: UsuarioDTO = {
       idUsuario: this.sessionService.getUserData()?.idUsuario,
+      nombre: "",
+      email: "",
     }
     this.apiService.getMateriasWithValidations(usuario).subscribe({
       next: (response) => {

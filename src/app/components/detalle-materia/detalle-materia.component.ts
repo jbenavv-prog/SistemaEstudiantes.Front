@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { SessionService } from '../../services/session.service';
 import { UsuarioMateriaDTO } from '../../dtos/usuario-materia/usuario-materia.dto';
 import { ErrorHandlerService } from '../../services/error-handler.service';
+import { DetalleMateriaConEstudiantesResponseDTO } from '../../dtos/materia/detalle-materia-con-estudiantes';
 
 @Component({
   selector: 'app-detalle-materia',
@@ -14,6 +15,11 @@ import { ErrorHandlerService } from '../../services/error-handler.service';
 export class DetalleMateriaComponent {
   idMateria!: number;
 
+  detalleMateriaConEstudiantes: DetalleMateriaConEstudiantesResponseDTO = {
+    idMateria: 0,
+    nombre: '',
+    estudiantes: []
+  };
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
@@ -40,6 +46,7 @@ export class DetalleMateriaComponent {
     this.apiService.getDetalleMateriaConEstudiantes(usuarioMateria).subscribe({
       next: (response) => {
         console.log('Detalle de la materia con estudiantes:', response.data);
+        this.detalleMateriaConEstudiantes = response.data;
       },
       error: (err) => {
         this.errorHandler.handleHttpError(err);
