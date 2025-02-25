@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { authGuard } from './guards/auth.guard';
 import { MateriasComponent } from './components/materias/materias.component';
+import { DetalleMateriaComponent } from './components/detalle-materia/detalle-materia.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'materias', component: MateriasComponent },
+      { path: 'materias/:id', component: DetalleMateriaComponent }, //
     ],
   },
   {

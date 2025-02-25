@@ -10,7 +10,7 @@ import { SuscripcionProgramaUsuario } from '../../dtos/usuario/suscripcion-progr
 import { MateriaWithValidationsResponse } from '../../dtos/materia/materia-with-validations-response.dto';
 import { MatTableModule } from '@angular/material/table';
 import { CreateUsuarioMateriaDTO } from '../../dtos/usuario-materia/create-usuario-materia.dto';
-import { UsuarioDTO } from '../../dtos/usuario-materia/usuario.dto';
+import { UsuarioDTO } from '../../dtos/usuario/usuario.dto';
 @Component({
   selector: 'app-materias',
   imports: [MatButtonModule, MatCardModule, MatTableModule],
@@ -94,7 +94,8 @@ export class MateriasComponent {
     });
   }
 
-  routeMateria(){
+  routeMateria(idMateria: number){
+    this.router.navigate(['/materias', idMateria]);
   }
 
   suscribirMateria(idMateria: number){

@@ -9,7 +9,9 @@ import { SuscripcionProgramaUsuario } from '../dtos/usuario/suscripcion-programa
 import { MateriaWithValidationsResponse } from '../dtos/materia/materia-with-validations-response.dto';
 import { UsuarioMateriaResponse } from '../dtos/usuario-materia/usuario-materia-response.dto';
 import { CreateUsuarioMateriaDTO } from '../dtos/usuario-materia/create-usuario-materia.dto';
-import { UsuarioDTO } from '../dtos/usuario-materia/usuario.dto';
+import { UsuarioDTO } from '../dtos/usuario/usuario.dto';
+import { UsuarioMateriaDTO } from '../dtos/usuario-materia/usuario-materia.dto';
+import { DetalleMateriaConEstudiantesResponseDTO } from '../dtos/materia/detalle-materia-con-estudiantes';
 
 
 @Injectable({
@@ -47,5 +49,9 @@ export class ApiService {
 
     suscribirMateria(createUsuarioMateria: CreateUsuarioMateriaDTO): Observable<ApiResponse<UsuarioMateriaResponse>> {
       return this.http.post<ApiResponse<UsuarioMateriaResponse>>(`${this.apiUrl}/usuarioMateria/suscribirMateria`, createUsuarioMateria);
+    }
+
+    getDetalleMateriaConEstudiantes(usuarioMateria: UsuarioMateriaDTO): Observable<ApiResponse<DetalleMateriaConEstudiantesResponseDTO>> {
+      return this.http.post<ApiResponse<DetalleMateriaConEstudiantesResponseDTO>>(`${this.apiUrl}/materia/getDetalleMateriaConEstudiantes`, usuarioMateria);
     }
 }
