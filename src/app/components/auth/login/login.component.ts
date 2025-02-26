@@ -9,6 +9,7 @@ import { ApiService } from '../../../services/api.service';
 import { LoginUsuarioDTO } from '../../../dtos/usuario/login-usuario.dto';
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 import { SessionService } from '../../../services/session.service';
+import { LoaderService } from '../../../services/loader.service';
 @Component({
   selector: 'app-login',
   imports: [
@@ -29,7 +30,8 @@ export class LoginComponent {
     private apiService: ApiService,
     private router: Router,
     private errorHandler: ErrorHandlerService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private loaderService: LoaderService
   ) {}
 
   loginForm = new FormGroup({
@@ -38,6 +40,7 @@ export class LoginComponent {
   });
 
   onSubmit() {
+    this.loaderService.show();
     console.warn(this.loginForm.value);
     if (this.loginForm.invalid) {
       return;
@@ -57,8 +60,13 @@ export class LoginComponent {
       },  
       error: (err) => {
         this.errorHandler.handleHttpError(err);
+        this.loaderService.hide();
+      },
+      complete: () => {
+        this.loaderService.hide();
       },
     });
+    
   }
 
   hide = signal(true);
