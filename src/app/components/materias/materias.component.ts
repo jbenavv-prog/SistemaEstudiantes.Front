@@ -29,7 +29,7 @@ export class MateriasComponent {
   programas = new Array();
   programa: ProgramaResponseDTO = {} as ProgramaResponseDTO;
   materiasWithValidations: MateriaWithValidationsResponse[] = new Array();
-  displayedColumns: string[] = ['idMateria', 'nombre', 'puedeIngresar'];
+  displayedColumns: string[] = ['idMateria', 'nombre', 'nombreProfesor', 'puedeIngresar'];
 
   ngOnInit() {
     this.getPrograma();

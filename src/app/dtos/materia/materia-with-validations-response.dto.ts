@@ -1,6 +1,7 @@
 export interface MateriaWithValidationsResponse {
   idMateria: number;
   nombre: string;
+  nombreProfesor: string;
   puedeIngresar: boolean;
   esMiembro: boolean;
   mensajes: [];
