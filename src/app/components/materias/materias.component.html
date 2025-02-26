@@ -1,63 +1,63 @@
 <div class="d-flex justify-content-around">
-    <div>
-        <h1 class="m-5">Programa</h1>
+  <div>
+    <h1 class="m-5">Programa</h1>
 
-        @if(programa){
-            <mat-card class="p-3" style="width: 300px;">
-                <mat-card-title class="m-3"> {{programa.nombre}}</mat-card-title>
-                <button disabled mat-raised-button>Suscrito</button>
-            </mat-card>
-        } @else {
-            @for (program of programas; track program.idPrograma) {
-                <mat-card class="p-3" style="width: 300px;">
-                    <mat-card-title class="m-3"> {{program.nombre}}</mat-card-title>
-                    <!-- <button (click)="suscribirPrograma()" mat-raised-button>Unirse al programa</button> -->
-                </mat-card>
-                } @empty {
-                <li>No hay programas.</li>
-                }
-        }
-    </div>
-    <div>
-        <!-- @if(programa.nombre){ -->
-           @if(materiasWithValidations.length > 0){
-            <h1 class="m-5">Materias</h1>
-            <table mat-table [dataSource]="materiasWithValidations" class="mat-elevation-z8">
+    @if(programa){
+    <mat-card class="p-3" style="width: 300px;">
+      <mat-card-title class="m-3"> {{programa.nombre}}</mat-card-title>
+      <button disabled mat-raised-button>Suscrito</button>
+    </mat-card>
+    } @else {
+    @for (program of programas; track program.idPrograma) {
+    <mat-card class="p-3" style="width: 300px;">
+      <mat-card-title class="m-3"> {{program.nombre}}</mat-card-title>
+      <button (click)="suscribirPrograma(program.idPrograma)" mat-raised-button>Unirse al programa</button>
+    </mat-card>
+    } @empty {
+    <li>No hay programas.</li>
+    }
+    }
+  </div>
+  @if(programa){
+  <div>
+    @if(materiasWithValidations.length > 0){
+    <h1 class="m-5">Materias</h1>
+    <table mat-table [dataSource]="materiasWithValidations" class="mat-elevation-z8">
 
-              
-                <ng-container matColumnDef="idMateria">
-                  <th mat-header-cell *matHeaderCellDef> No. </th>
-                  <td mat-cell *matCellDef="let element"> {{element.idMateria}} </td>
-                </ng-container>
-            
-                <ng-container matColumnDef="nombre">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                </ng-container>
-              
-                <ng-container matColumnDef="puedeIngresar">
-                  <th mat-header-cell *matHeaderCellDef> Funciones </th>
-                  <td mat-cell *matCellDef="let element">
-                    @if(element.esMiembro){
-                      <button class="mr-2" disabled  mat-raised-button>Ya estás Suscrito</button>
-                      <button (click)="routeMateria(element.idMateria)" mat-raised-button>Ingresar</button>
-                    }@else if(element.puedeIngresar){
-                      <button class="mr-2" (click)="suscribirMateria(element.idMateria)" mat-raised-button>Suscribirse</button>
-                      <button disabled mat-raised-button>Ingresar</button>
-                    }@else if (!element.puedeIngresar) {
-                      <ul>
-                      @for (mensaje of element.mensajes; track mensaje) {
-                          <li> {{ mensaje }}</li>
-                        }
-                      </ul>
-                    }
-                </ng-container>
-            
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
+
+      <ng-container matColumnDef="idMateria">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element"> {{element.idMateria}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="puedeIngresar">
+        <th mat-header-cell *matHeaderCellDef> Funciones </th>
+        <td mat-cell *matCellDef="let element">
+          @if(element.esMiembro){
+          <button class="mr-2" disabled mat-raised-button>Ya estás Suscrito</button>
+          <button (click)="routeMateria(element.idMateria)" mat-raised-button>Ingresar</button>
+          }@else if(element.puedeIngresar){
+          <button class="mr-2" (click)="suscribirMateria(element.idMateria)" mat-raised-button>Suscribirse</button>
+          <button disabled mat-raised-button>Ingresar</button>
+          }@else if (!element.puedeIngresar) {
+          <ul>
+            @for (mensaje of element.mensajes; track mensaje) {
+            <li> {{ mensaje }}</li>
+            }
+          </ul>
           }
-        
-    </div>
-</div>
+      </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    }
+
+  </div>
+  }
+</div>

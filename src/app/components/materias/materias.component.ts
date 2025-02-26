@@ -6,11 +6,12 @@ import { SessionService } from '../../services/session.service';
 import { ProgramaResponseDTO } from '../../dtos/programa/programa-response.dto';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { SuscripcionProgramaUsuario } from '../../dtos/usuario/suscripcion-programa-usuario.dto';
+import { SuscripcionProgramaUsuarioDTO } from '../../dtos/usuario/suscripcion-programa-usuario.dto';
 import { MateriaWithValidationsResponse } from '../../dtos/materia/materia-with-validations-response.dto';
 import { MatTableModule } from '@angular/material/table';
 import { CreateUsuarioMateriaDTO } from '../../dtos/usuario-materia/create-usuario-materia.dto';
 import { UsuarioDTO } from '../../dtos/usuario/usuario.dto';
+import { ProgramaDTO } from '../../dtos/programa/programa.dto';
 @Component({
   selector: 'app-materias',
   imports: [MatButtonModule, MatCardModule, MatTableModule],
@@ -49,8 +50,10 @@ export class MateriasComponent {
   }
 
   getPrograma(){
-    const idPrograma = this.sessionService.getUserData()?.IdPrograma;
-    this.apiService.getProgramaById(idPrograma).subscribe({
+    const programa: ProgramaDTO = {
+      idPrograma: this.sessionService.getUserData()?.idPrograma
+    }
+    this.apiService.getProgramaById(programa).subscribe({
       next: (response) => {
         console.log('Programa obtenido exitosamente:', response);
         this.programa = response.data;
@@ -61,23 +64,32 @@ export class MateriasComponent {
     });
   }
 
-  suscribirPrograma(){
-    const suscripcionProgramaUsuario: SuscripcionProgramaUsuario = 
-      {
-        idUsuario: this.sessionService.getUserData()?.idUsuario,
-        idPrograma: this.programa.idPrograma.toString(),
-      }
-
-      this.apiService.suscribirPrograma(suscripcionProgramaUsuario).subscribe({
-        next: (response) => {
-          console.log('Suscripción exitosa:', response);
-          this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          this.errorHandler.handleHttpError(err);
-        },
-      });
+  suscribirPrograma(idPrograma: number) {
+    const suscripcionProgramaUsuario: SuscripcionProgramaUsuarioDTO = {
+      idUsuario: this.sessionService.getUserData()?.idUsuario,
+      idPrograma: idPrograma,
+    };
+  
+    this.apiService.suscribirPrograma(suscripcionProgramaUsuario).subscribe({
+      next: (response) => {
+        console.log('Suscripción exitosa:', response);
+        
+        // Obtener el usuario actual del localStorage
+        const user = this.sessionService.getUserData();
+        if (user) {
+          user.idPrograma = idPrograma; // Actualizar el idPrograma
+          this.sessionService.setUserData(user); // Guardar en localStorage
+        }
+  
+        this.getPrograma();
+        this.getProgramas();
+      },
+      error: (err) => {
+        this.errorHandler.handleHttpError(err);
+      },
+    });
   }
+  
 
   getMateriasWithValidations(){
     const usuario: UsuarioDTO = {

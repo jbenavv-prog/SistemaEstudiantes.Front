@@ -1,4 +1,4 @@
-export interface SuscripcionProgramaUsuario {
-  idUsuario: string;
-  idPrograma: string;
+export interface SuscripcionProgramaUsuarioDTO {
+  idUsuario: number;
+  idPrograma: number;
 }

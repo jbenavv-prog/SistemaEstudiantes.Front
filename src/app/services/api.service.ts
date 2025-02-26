@@ -5,13 +5,14 @@ import { CreateUsuarioDTO,  } from '../dtos/usuario/create-usuario.dto';
 import { LoginUsuarioDTO } from '../dtos/usuario/login-usuario.dto';
 import { ProgramaResponseDTO } from '../dtos/programa/programa-response.dto';
 import {ApiResponse } from '../models/api-response.module'
-import { SuscripcionProgramaUsuario } from '../dtos/usuario/suscripcion-programa-usuario.dto';
+import { SuscripcionProgramaUsuarioDTO } from '../dtos/usuario/suscripcion-programa-usuario.dto';
 import { MateriaWithValidationsResponse } from '../dtos/materia/materia-with-validations-response.dto';
 import { UsuarioMateriaResponse } from '../dtos/usuario-materia/usuario-materia-response.dto';
 import { CreateUsuarioMateriaDTO } from '../dtos/usuario-materia/create-usuario-materia.dto';
 import { UsuarioDTO } from '../dtos/usuario/usuario.dto';
 import { UsuarioMateriaDTO } from '../dtos/usuario-materia/usuario-materia.dto';
 import { DetalleMateriaConEstudiantesResponseDTO } from '../dtos/materia/detalle-materia-con-estudiantes';
+import { ProgramaDTO } from '../dtos/programa/programa.dto';
 
 
 @Injectable({
@@ -39,11 +40,11 @@ export class ApiService {
       return this.http.get<ApiResponse<ProgramaResponseDTO[]>>(`${this.apiUrl}/programa/getAll`);
     }
 
-    getProgramaById(idPrograma: number): Observable<ApiResponse<ProgramaResponseDTO>> {
-      return this.http.post<ApiResponse<ProgramaResponseDTO>>(`${this.apiUrl}/programa/getById`, idPrograma);
+    getProgramaById(programa: ProgramaDTO): Observable<ApiResponse<ProgramaResponseDTO>> {
+      return this.http.post<ApiResponse<ProgramaResponseDTO>>(`${this.apiUrl}/programa/getById`, programa);
     }
 
-    suscribirPrograma(suscripcionProgramaUsuario: SuscripcionProgramaUsuario): Observable<ApiResponse<ProgramaResponseDTO>> {
+    suscribirPrograma(suscripcionProgramaUsuario: SuscripcionProgramaUsuarioDTO): Observable<ApiResponse<ProgramaResponseDTO>> {
       return this.http.post<ApiResponse<ProgramaResponseDTO>>(`${this.apiUrl}/usuario/suscribirPrograma`, suscripcionProgramaUsuario);
     }
 
