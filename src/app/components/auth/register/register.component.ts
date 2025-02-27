@@ -14,6 +14,7 @@ import { ApiService } from '../../../services/api.service';
 import { ErrorHandlerService } from '../../../services/error-handler.service';
 import { CreateUsuarioDTO } from '../../../dtos/usuario/create-usuario.dto';
 import { Router } from '@angular/router';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  constructor(private apiService: ApiService, private errorHandler: ErrorHandlerService, private router: Router) {}
+  constructor(private apiService: ApiService, private errorHandler: ErrorHandlerService, private router: Router, private loaderService: LoaderService) {}
 
   loginForm = new FormGroup({
     nombre: new FormControl(''),
@@ -40,6 +41,7 @@ export class RegisterComponent {
   });
 
   onSubmit() {
+    this.loaderService.show();
     console.warn(this.loginForm.value);
     if (this.loginForm.invalid) {
       return;
@@ -55,10 +57,13 @@ export class RegisterComponent {
       next: (response) => {
         console.log('Usuario registrado exitosamente:', response);
         this.router.navigate(['/auth/login']);
+        this.loaderService.hide();
       },
       error: (err) => {
         this.errorHandler.handleHttpError(err);
+        this.loaderService.hide();
       },
+      
     });
   }
 
